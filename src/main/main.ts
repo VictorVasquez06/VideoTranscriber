@@ -48,6 +48,22 @@ function emitError(error: string): void {
   }
 }
 
+function configurePackagedRuntimePath(): void {
+  if (!app.isPackaged) {
+    return;
+  }
+
+  const runtimeDirectories = [
+    path.join(process.resourcesPath, 'ffmpeg', 'bin'),
+    path.join(process.resourcesPath, 'whisper', 'bin')
+  ];
+  const existingEntries = (process.env.PATH ?? '').split(path.delimiter).filter(Boolean);
+  const missingEntries = runtimeDirectories.filter((directory) =>
+    !existingEntries.some((entry) => entry.toLowerCase() === directory.toLowerCase())
+  );
+  process.env.PATH = [...missingEntries, ...existingEntries].join(path.delimiter);
+}
+
 function getRendererPath(): string {
   return path.resolve(__dirname, '..', 'renderer', 'index.html');
 }
@@ -382,6 +398,7 @@ ipcMain.handle(IPC_CHANNELS.START_TRANSCRIPTION, async (_event, payload: Transcr
 });
 
 app.on('ready', async () => {
+  configurePackagedRuntimePath();
   await createWindows();
 });
 

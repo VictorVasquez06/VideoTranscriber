@@ -2,40 +2,33 @@
 
 Aplicación desktop local para transcribir audio de reuniones a partir de un video MP4 o WMV, con procesamiento offline y sin subir archivos a servicios externos.
 
-## Requisitos
+## Instalar la aplicación
 
-- Windows 10 o 11 (x64)
-- Node.js LTS
-- FFmpeg y FFprobe instalados en PATH
-- Whisper.cpp compilado localmente siguiendo la referencia oficial del repositorio: https://github.com/ggml-org/whisper.cpp/tree/sync-ggml-26-07-30
-- Un modelo local de Whisper compatible (por ejemplo, ggml-base.bin o ggml-small.bin)
+Descarga `VideoTranscriber-Setup-2.0.0.exe` desde la release privada `v2.0.0` y ejecútalo. El instalador incluye la aplicación, FFmpeg/FFprobe, Whisper.cpp, las DLL de Visual C++ necesarias y el modelo `ggml-base.bin`. No requiere Node.js ni conexión a Internet para transcribir.
 
-## Instalación
+## Crear el instalador desde el código fuente
 
-1. Instala Node.js LTS.
-2. Instala FFmpeg y asegúrate de que ffmpeg.exe y ffprobe.exe queden en PATH.
-3. Clona la referencia recomendada de Whisper.cpp:
+Requisitos del equipo de build:
 
-```powershell
-git clone --branch sync-ggml-26-07-30 --depth 1 https://github.com/ggml-org/whisper.cpp.git
-cd whisper.cpp
-```
+- Windows 10/11 x64 y Node.js LTS
+- FFmpeg/FFprobe disponibles en PATH
+- `whisper-cli.exe` y sus DLL en `%USERPROFILE%\whisper\`
+- `ggml-base.bin` en `%USERPROFILE%\whisper\models\`
 
-4. Compila el binario en Windows según la guía del proyecto y genera whisper.exe.
-5. Descarga o coloca el modelo local en una de estas rutas:
-   - bin/
-   - tools/
-   - bin/models/
-   - tools/models/
-   - build/bin/
-   - build/bin/Release/
-   - %USERPROFILE%\whisper\
-6. Ejecuta:
+Ejecuta desde la raíz del proyecto:
 
 ```powershell
 npm install
-npm run build
-npm start
+npm run dist:win
+```
+
+El instalador NSIS se genera en `release/VideoTranscriber-Setup-2.0.0.exe` y permite elegir la carpeta de instalación.
+
+## Ejecutar desde el código fuente
+
+```powershell
+npm install
+npm run dev
 ```
 
 ## Verificación del entorno
@@ -46,21 +39,9 @@ node scripts/check-environment.js
 
 El comando mostrará si falta FFmpeg, FFprobe, Whisper.cpp o el modelo local.
 
-## Rutas de Whisper.cpp que esta app busca
+## Licencias de terceros
 
-La detección actual del proyecto contempla rutas típicas del build de whisper.cpp, por ejemplo:
-- build/bin/whisper.exe
-- build/bin/Release/whisper.exe
-- build/Release/whisper.exe
-- bin/whisper.exe
-- tools/whisper.exe
-- %USERPROFILE%\whisper\
-
-Esto permite que la app reconozca el binario sin depender de un PATH global manual.
-
-## Modelo recomendado para MVP
-
-Para una primera versión estable en español, lo recomendado es probar con un modelo pequeño o base de Whisper.cpp y validar rendimiento real en el hardware objetivo antes de decidir el modelo definitivo.
+El instalador incluye el build compartido FFmpeg 9.0.2 de Gyan (GPLv3), Whisper.cpp (MIT), el modelo multilingüe `ggml-base.bin` y los redistribuibles de Microsoft Visual C++. Las licencias y referencias a las fuentes están en `resources/licenses` dentro de la instalación.
 
 ## Consideraciones de seguridad
 

@@ -1,13 +1,15 @@
 {
   "name": "videotranscriber",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Transcripción local de videos con Whisper.cpp",
   "main": "dist/main/main.js",
   "scripts": {
     "build": "tsc -p tsconfig.json && tsc -p tsconfig.renderer.json && node scripts/copy-static.js",
     "start": "electron .",
     "dev": "npm run build && electron .",
-    "check:env": "node scripts/check-environment.js"
+    "check:env": "node scripts/check-environment.js",
+    "pack:runtime": "node scripts/prepare-runtime.js",
+    "dist:win": "npm run build && npm run pack:runtime && electron-builder --win nsis"
   },
   "keywords": [
     "electron",
@@ -20,6 +22,51 @@
   "devDependencies": {
     "@types/node": "^22.10.2",
     "electron": "^33.2.1",
+    "electron-builder": "^26.15.3",
     "typescript": "^5.7.2"
+  },
+  "build": {
+    "appId": "com.victorvasquez.videotranscriber",
+    "productName": "VideoTranscriber",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "packaging/runtime/ffmpeg",
+        "to": "ffmpeg"
+      },
+      {
+        "from": "packaging/runtime/whisper",
+        "to": "whisper"
+      },
+      {
+        "from": "packaging/runtime/licenses",
+        "to": "licenses"
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "VideoTranscriber-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "VideoTranscriber"
+    }
   }
 }

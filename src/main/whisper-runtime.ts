@@ -8,7 +8,16 @@ export type WhisperRuntime = {
   modelPath: string;
 };
 
+const PACKAGED_RUNTIME_ROOTS = process.resourcesPath
+  ? [
+      path.join(process.resourcesPath, 'whisper', 'bin'),
+      path.join(process.resourcesPath, 'ffmpeg', 'bin'),
+      path.join(process.resourcesPath, 'whisper')
+    ]
+  : [];
+
 const SEARCH_ROOTS = [
+  ...PACKAGED_RUNTIME_ROOTS,
   process.cwd(),
   path.resolve(process.cwd(), 'bin'),
   path.resolve(process.cwd(), 'tools'),
