@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VideoTranscriber</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Proyecto local</p>
+          <h1>VideoTranscriber</h1>
+        </div>
+        <button id="select-file" class="primary">Seleccionar video</button>
+      </header>
+
+      <main class="content">
+        <section class="panel">
+          <div class="field-row">
+            <label for="file-path">Archivo</label>
+            <input id="file-path" type="text" placeholder="Ningún archivo seleccionado" readonly />
+          </div>
+
+          <div class="field-row">
+            <label for="language">Idioma</label>
+            <select id="language">
+              <option value="es">Español</option>
+              <option value="en">Inglés</option>
+            </select>
+          </div>
+
+          <div class="actions">
+            <button id="start-transcription" class="primary">Iniciar transcripción</button>
+            <button id="cancel-transcription" class="secondary">Cancelar</button>
+          </div>
+
+          <div class="status-block">
+            <div class="status-header">
+              <span>Estado del trabajo</span>
+              <span id="phase-label">Esperando</span>
+            </div>
+            <div class="progress-bar">
+              <div id="progress-fill"></div>
+            </div>
+            <p id="status-message">Selecciona un video MP4 o WMV para comenzar.</p>
+          </div>
+        </section>
+
+        <section class="panel output-panel">
+          <div class="output-header">
+            <h2>Transcripción</h2>
+            <div class="output-actions">
+              <button id="save-transcript" class="primary" type="button" hidden>Descargar TXT</button>
+              <button id="copy-text" class="ghost" type="button">Copiar</button>
+            </div>
+          </div>
+          <textarea id="transcript-output" readonly placeholder="La transcripción aparecerá aquí..."></textarea>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="./renderer.js"></script>
+  </body>
+</html>
