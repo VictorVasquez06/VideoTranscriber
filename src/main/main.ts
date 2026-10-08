@@ -249,7 +249,8 @@ ipcMain.handle(IPC_CHANNELS.SAVE_TRANSCRIPT, async (_event, payload: SaveTranscr
   }
 
   try {
-    await fs.promises.writeFile(result.filePath, payload.transcript, 'utf8');
+    const singleLineTranscript = payload.transcript.replace(/\s+/g, ' ').trim();
+    await fs.promises.writeFile(result.filePath, singleLineTranscript, 'utf8');
     return { ok: true, outputPath: result.filePath };
   } catch (error) {
     return {

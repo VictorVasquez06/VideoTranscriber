@@ -4,7 +4,7 @@ Aplicación desktop local para transcribir audio de reuniones a partir de un vid
 
 ## Instalar la aplicación
 
-Descarga `VideoTranscriber-Setup-2.0.0.exe` desde la release privada `v2.0.0` y ejecútalo. El instalador incluye la aplicación, FFmpeg/FFprobe, Whisper.cpp, las DLL de Visual C++ necesarias y el modelo `ggml-base.bin`. No requiere Node.js ni conexión a Internet para transcribir.
+Descarga `VideoTranscriber-Setup-2.0.1.exe` desde la release privada `v2.0.1` y ejecútalo. El instalador incluye la aplicación, FFmpeg/FFprobe, Whisper.cpp, las DLL de Visual C++ necesarias y el modelo `ggml-base.bin`. No requiere Node.js ni conexión a Internet para transcribir.
 
 ## Crear el instalador desde el código fuente
 
@@ -22,7 +22,7 @@ npm install
 npm run dist:win
 ```
 
-El instalador NSIS se genera en `release/VideoTranscriber-Setup-2.0.0.exe` y permite elegir la carpeta de instalación.
+El instalador NSIS se genera en `release/VideoTranscriber-Setup-2.0.1.exe` y permite elegir la carpeta de instalación.
 
 ## Ejecutar desde el código fuente
 

@@ -1,6 +1,6 @@
 {
   "name": "videotranscriber",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Transcripción local de videos con Whisper.cpp",
   "main": "dist/main/main.js",
   "scripts": {
